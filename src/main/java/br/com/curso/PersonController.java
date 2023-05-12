@@ -19,7 +19,7 @@ import br.com.curso.data.vo.v2.PersonVOV2;
 import br.com.curso.services.PersonService;
 
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
 	@Autowired
