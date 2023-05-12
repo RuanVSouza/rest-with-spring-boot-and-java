@@ -1,0 +1,13 @@
+spring:
+  datasource:
+   driver-class-name: com.mysql.cj.jdbc.Driver
+   url: jdbc:mysql://localhost:3306/rest-with-spring-boot-and-java?useTimeZone=true&serverTimeZone=UTC
+   username: root
+   password: G.yn7oau8
+  jpa:
+   hibernate:
+    ddl-auto: update
+   properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQLDialect
+   show-sql: false
