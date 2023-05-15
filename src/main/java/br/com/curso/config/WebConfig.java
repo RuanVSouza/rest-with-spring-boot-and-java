@@ -13,8 +13,9 @@ import br.com.curso.serialization.converter.YamlJackson2HttpMessageConverter;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
-	@SuppressWarnings("unused")
-	private static final MediaType MEDIA_TYPE_APPLICAION_YML = MediaType.valueOf("application/x-yml");
+	//@SuppressWarnings("unused")
+	//private static final MediaType MEDIA_TYPE_APPLICAION_YML = MediaType.valueOf("application/x-yml");
+	
 	
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -24,11 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		
-	
 
-	
-		
 		//Implementando via QUERYPARAM   http://localhost:8080/api/person/v1?mediaType=json
 		/*
 		configurer.favorParameter(true)
@@ -39,6 +36,7 @@ public class WebConfig implements WebMvcConfigurer{
 			.mediaType("json", MediaType.APPLICATION_JSON)
 			.mediaType("xml", MediaType.APPLICATION_XML);
 			*/
+			
 		
 		//Implementando via HEADER
 		configurer.favorParameter(false)
@@ -47,7 +45,8 @@ public class WebConfig implements WebMvcConfigurer{
 		.defaultContentType(MediaType.APPLICATION_JSON)
 			.mediaType("json", MediaType.APPLICATION_JSON)
 			.mediaType("xml", MediaType.APPLICATION_XML)
-			.mediaType("xml-yml", MediaType.APPLICATION_XML);
+			.mediaType("x-yaml", MediaType.APPLICATION_XML);
+			
 	}
 
 	
