@@ -23,7 +23,6 @@ public class PersonVO implements Serializable{
 	
 	private String address;
 	
-	@JsonIgnore
 	private String gender;
 	
 	public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
