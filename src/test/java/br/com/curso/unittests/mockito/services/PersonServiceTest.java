@@ -2,9 +2,11 @@ package br.com.curso.unittests.mockito.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +19,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.curso.data.vo.v1.PersonVO;
+import br.com.curso.exceptions.RequiredObjectsIsNullException;
 import br.com.curso.model.Person;
 import br.com.curso.repositories.PersonRepository;
 import br.com.curso.services.PersonService;
@@ -42,27 +46,65 @@ class PersonServiceTest {
 
 	@Test
 	void testFindAll() {
+		List<Person> list = input.mockEntityList(); 
 		
-		fail("Not yet implemented");
-	}
+		when(repository.findAll()).thenReturn(list);
+		
+		var people = service.findAll();
+		
+		assertNotNull(people);
+		assertEquals(14, people.size());
+		
+		var personOne = people.get(1);
+		
+		assertNotNull(personOne);
+		assertNotNull(personOne.getKey());
+		assertNotNull(personOne.getLinks());
+		
+		assertTrue(personOne.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Addres Test1", personOne.getAddress());
+		assertEquals("First Name Test1", personOne.getFirstName());
+		assertEquals("Last Name Test1", personOne.getLastName());
+		assertEquals("Female", personOne.getGender());
+		
+		var personFour = people.get(4);
+		
+		assertNotNull(personFour);
+		assertNotNull(personFour.getKey());
+		assertNotNull(personFour.getLinks());
+		
+		assertTrue(personFour.toString().contains("links: [</api/person/v1/4>;rel=\"self\"]"));
+		assertEquals("Addres Test4", personFour.getAddress());
+		assertEquals("First Name Test4", personFour.getFirstName());
+		assertEquals("Last Name Test4", personFour.getLastName());
+		assertEquals("Male", personFour.getGender());
+		
+		var personSeven = people.get(7);
+		
+		assertNotNull(personSeven);
+		assertNotNull(personSeven.getKey());
+		assertNotNull(personSeven.getLinks());
+		
+		assertTrue(personSeven.toString().contains("links: [</api/person/v1/7>;rel=\"self\"]"));
+		assertEquals("Addres Test7", personSeven.getAddress());
+		assertEquals("First Name Test7", personSeven.getFirstName());
+		assertEquals("Last Name Test7", personSeven.getLastName());
+		assertEquals("Female", personSeven.getGender());
 
-	private void fail(String string) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Test
 	void testFindById() {
-		Person person = input.mockEntity(1);
-		person.setId(1L);
+		Person entity = input.mockEntity(1);
+		entity.setId(1L);
 		
-		when(repository.findById(1L)).thenReturn(Optional.of(person));
+		when(repository.findById(1L)).thenReturn(Optional.of(entity));
 		
 		var result = service.findById(1L);
 		assertNotNull(result);
 		assertNotNull(result.getKey());
 		assertNotNull(result.getLinks());
-		System.out.println(result.toString());
+		//System.out.println(result.toString()); gerando a API para pegar. API gerada é essa de baixo dentro do link
 		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
 		assertEquals("Addres Test1", result.getAddress());
 		assertEquals("First Name Test1", result.getFirstName());
@@ -71,23 +113,90 @@ class PersonServiceTest {
 	}
 
 	@Test
-	void testCreate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCreateV2() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testUpdate() {
-		fail("Not yet implemented");
+		Person entity = input.mockEntity(1);
+		
+		Person persisted = entity;
+		persisted.setId(1L);
+		
+		PersonVO vo = input.mockVO(1);
+		vo.setKey(1L);
+		
+		when(repository.findById(1L)).thenReturn(Optional.of(entity));
+		when(repository.save(entity)).thenReturn(persisted);
+		
+		var result = service.update(vo);
+		
+		assertNotNull(result);
+		assertNotNull(result.getKey());
+		assertNotNull(result.getLinks());
+		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Addres Test1", result.getAddress());
+		assertEquals("First Name Test1", result.getFirstName());
+		assertEquals("Last Name Test1", result.getLastName());
+		assertEquals("Female", result.getGender());
+	}
+	
+	@Test
+	void testUpdateWithNullPerson() {
+		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+			service.update(null);
+		});
+		
+		String expcetedMessage = "It is not allowed to persiste a null objetc";
+		String actualMessage = exception.getMessage();
+		
+		assertTrue(actualMessage.contains(expcetedMessage));
+		
 	}
 
+
+	@Test
+	void testCreate() {
+		Person entity = input.mockEntity(1);
+		entity.setId(1L);
+		
+		Person persisted = entity;
+		persisted.setId(1L);
+		
+		PersonVO vo = input.mockVO(1);
+		vo.setKey(1L);
+		
+		when(repository.save(entity)).thenReturn(persisted);
+		
+		var result = service.create(vo);
+		
+		assertNotNull(result);
+		assertNotNull(result.getKey());
+		assertNotNull(result.getLinks());
+		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Addres Test1", result.getAddress());
+		assertEquals("First Name Test1", result.getFirstName());
+		assertEquals("Last Name Test1", result.getLastName());
+		assertEquals("Female", result.getGender());
+	}
+	@Test
+	void testCreateWithNullPerson() {
+		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+			service.create(null);
+		});
+		
+		String expcetedMessage = "It is not allowed to persiste a null objetc";
+		String actualMessage = exception.getMessage();
+		
+		assertTrue(actualMessage.contains(expcetedMessage));
+		
+	}
 	@Test
 	void testDelete() {
-		fail("Not yet implemented");
-	}
+		Person entity = input.mockEntity(1);
+		Person persisted = entity;
+		
+		persisted.setId(1L);
+		
+		when(repository.findById(1L)).thenReturn(Optional.of(entity));
+		
+		service.delete(1L);	
+		}
 
 }

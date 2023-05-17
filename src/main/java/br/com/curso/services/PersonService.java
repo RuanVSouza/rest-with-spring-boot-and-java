@@ -11,6 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import br.com.curso.PersonController;
 import br.com.curso.data.vo.v1.PersonVO;
 import br.com.curso.data.vo.v2.PersonVOV2;
+import br.com.curso.exceptions.RequiredObjectsIsNullException;
 import br.com.curso.exceptions.ResourceNotFoundExcepcion;
 import br.com.curso.mapper.DozerMapper;
 import br.com.curso.mapper.custom.PersonMapper;
@@ -46,6 +47,8 @@ public class PersonService {
 	}
 
 	public PersonVO create(PersonVO person) {
+		if(person == null) throw new RequiredObjectsIsNullException();
+		
 		logger.info("Creating one person!");
 		
 		var entity =  DozerMapper.parseObject(person, Person.class);
@@ -64,6 +67,8 @@ public class PersonService {
 	}
 
 	public PersonVO update(PersonVO person){
+		if(person == null) throw new RequiredObjectsIsNullException();
+		
 		logger.info("Update one person!");
 
 		var entity = repository.findById(person.getKey())
