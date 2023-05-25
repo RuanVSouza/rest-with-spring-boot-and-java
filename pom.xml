@@ -97,8 +97,7 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
-			<version>${rest-assured.version}</version>
-		</dependency>
+			</dependency>
 		
 		<dependency>
 			<groupId>org.testcontainers</groupId>

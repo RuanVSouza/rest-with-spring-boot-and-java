@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import br.com.curso.PersonController;
+import br.com.curso.controllers.PersonController;
 import br.com.curso.data.vo.v1.PersonVO;
 import br.com.curso.data.vo.v2.PersonVOV2;
 import br.com.curso.exceptions.RequiredObjectsIsNullException;

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.curso.BookController;
+import br.com.curso.controllers.BookController;
 import br.com.curso.data.vo.v1.BookVO;
 import br.com.curso.exceptions.RequiredObjectsIsNullException;
 import br.com.curso.exceptions.ResourceNotFoundExcepcion;

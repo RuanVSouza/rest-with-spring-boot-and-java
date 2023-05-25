@@ -11,10 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.lifecycle.Startables;
 
-@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
+@ContextConfiguration(initializers  = AbstractIntegrationTest.Initializer.class)
 public class AbstractIntegrationTest {
 
-static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 		
 		static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.29");
 		

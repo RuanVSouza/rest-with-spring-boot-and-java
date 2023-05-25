@@ -88,5 +88,15 @@
     "name": "spring-doc.paths-to-match",
     "type": "java.lang.String",
     "description": "A description for 'spring-doc.paths-to-match'"
+  },
+  {
+    "name": "spring-doc.main.web-application-type",
+    "type": "java.lang.String",
+    "description": "A description for 'spring-doc.main.web-application-type'"
+  },
+  {
+    "name": "spring-doc.swagger-ui.spring",
+    "type": "java.lang.String",
+    "description": "A description for 'spring-doc.swagger-ui.spring'"
   }
 ]}

@@ -1,4 +1,4 @@
-package br.com.curso;
+package br.com.curso.controllers;
 
 import java.util.List;
 
