@@ -98,5 +98,10 @@
     "name": "spring-doc.swagger-ui.spring",
     "type": "java.lang.String",
     "description": "A description for 'spring-doc.swagger-ui.spring'"
+  },
+  {
+    "name": "cors.origin-patterns",
+    "type": "java.lang.String",
+    "description": "A description for 'cors.origin-patterns'"
   }
 ]}
