@@ -1,4 +1,4 @@
-package br.com.curso;
+package br.com.curso.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -97,6 +97,7 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
+			<version>${rest-assured.version}</version><!--$NO-MVN-MAN-VER$-->
 			</dependency>
 		
 		<dependency>

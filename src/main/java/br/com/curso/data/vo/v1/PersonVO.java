@@ -4,34 +4,24 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.dozermapper.core.Mapping;
 
 @JsonPropertyOrder({"id", "first_name", "last_name","address" ,"gender"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("id")
-	@Mapping("id")
-	private Long key;
-	
-	@JsonProperty("first_name")
+	private Long id;
 	private String firstName;
-	
-	@JsonProperty("last_name")//mudando o nome no consumo da API sem mudar em todo o codigo
 	private String lastName;
-	
 	private String address;
-	//JsonIgnore = não aparece quando consumimos a rest api
 	private String gender;
 	
 	
 
-	public PersonVO(Long key, String firstName, String lastName, String address, String gender) {
+	public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
 		super();
-		this.key = key;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -43,12 +33,12 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 
 	
 
-	public Long getKey() {
-		return key;
+	public Long getId() {
+		return id;
 	}
 
-	public void setKey(Long key) {
-		this.key = key;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -90,7 +80,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
@@ -119,10 +109,10 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 				return false;
 		} else if (!gender.equals(other.gender))
 			return false;
-		if (key == null) {
-			if (other.key != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!id.equals(other.id))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -131,6 +121,12 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 			return false;
 		return true;
 	}
+
+	
+
+	
+	
+	
 
 	
 	

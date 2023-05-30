@@ -2,21 +2,16 @@ package br.com.ruan.integrationtests.vo;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class PersonVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	
 	private Long id;
-	@JsonProperty("first_name")
 	private String firstName;
-	@JsonProperty("last_name")
 	private String lastName;
 	private String address;
 	private String gender;
-	
 
 	public PersonVO() {
 	}
@@ -61,8 +56,6 @@ public class PersonVO implements Serializable{
 		this.gender = gender;
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,8 +67,6 @@ public class PersonVO implements Serializable{
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -113,9 +104,4 @@ public class PersonVO implements Serializable{
 			return false;
 		return true;
 	}
-
-	
-	
-	
-	
 }
