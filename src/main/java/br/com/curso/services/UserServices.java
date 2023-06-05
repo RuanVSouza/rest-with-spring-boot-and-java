@@ -11,29 +11,25 @@ import org.springframework.stereotype.Service;
 import br.com.curso.repositories.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserServices implements UserDetailsService {
 	
-	private Logger logger = Logger.getLogger(UserService.class.getName());
-
+	private Logger logger = Logger.getLogger(UserServices.class.getName());
+	
 	@Autowired
 	UserRepository repository;
 	
-	public UserService(UserRepository repository) {
+	public UserServices(UserRepository repository) {
 		this.repository = repository;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		logger.info("finding one user by name " + username + "!");
+		logger.info("Finding one user by name " + username + "!");
 		var user = repository.findByUserName(username);
-		
 		if (user != null) {
 			return user;
 		} else {
-			throw new UsernameNotFoundException("Username" + username + "not found!");
+			throw new UsernameNotFoundException("Username " + username + " not found!");
 		}
 	}
-
-	
-	
 }
