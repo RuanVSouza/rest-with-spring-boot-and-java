@@ -23,47 +23,58 @@ public class TokenVO implements Serializable{
 		this.acessToken = acessToken;
 		this.refreshToken = refreshToken;
 	}
-	
+
 	public TokenVO() {
 	}
 	
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public Boolean getAuthenticated() {
 		return authenticated;
 	}
+
 	public void setAuthenticated(Boolean authenticated) {
 		this.authenticated = authenticated;
 	}
+
 	public Date getCreated() {
 		return created;
 	}
+
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+
 	public Date getExpiration() {
 		return expiration;
 	}
+
 	public void setExpiration(Date expiration) {
 		this.expiration = expiration;
 	}
+
 	public String getAcessToken() {
 		return acessToken;
 	}
+
 	public void setAcessToken(String acessToken) {
 		this.acessToken = acessToken;
 	}
+
 	public String getRefreshToken() {
 		return refreshToken;
 	}
+
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,7 +87,7 @@ public class TokenVO implements Serializable{
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -118,6 +129,7 @@ public class TokenVO implements Serializable{
 			return false;
 		return true;
 	}
+	
 	
 	
 	

@@ -18,7 +18,6 @@ public class JwtTokenFilter extends GenericFilterBean{
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 	
-	
 	public JwtTokenFilter(JwtTokenProvider tokenProvider) {
 		this.tokenProvider = tokenProvider;
 	}
@@ -27,14 +26,12 @@ public class JwtTokenFilter extends GenericFilterBean{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String token = tokenProvider.resolveToken((HttpServletRequest) request);
-		if(token != null && tokenProvider.validadeToken(token)) {
+		if (token != null && tokenProvider.validateToken(token)) {
 			Authentication auth = tokenProvider.getAuthentication(token);
 			if (auth != null) {
 				SecurityContextHolder.getContext().setAuthentication(auth);
-			} else {
-
 			}
 		}
-			chain.doFilter(request, response);
+		chain.doFilter(request, response);		
 	}
 }

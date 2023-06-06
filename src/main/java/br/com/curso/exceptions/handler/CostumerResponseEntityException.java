@@ -12,44 +12,59 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import br.com.curso.exceptions.ExceptionResponse;
 import br.com.curso.exceptions.InvalidJwtAuthenticationException;
-import br.com.curso.exceptions.RequiredObjectsIsNullException;
-import br.com.curso.exceptions.ResourceNotFoundExcepcion;
+import br.com.curso.exceptions.RequiredObjectIsNullException;
+import br.com.curso.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController
 public class CostumerResponseEntityException extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
-
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), 
+	public final ResponseEntity<ExceptionResponse> handleAllExceptions(
+			Exception ex, WebRequest request) {
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),
 				ex.getMessage(),
 				request.getDescription(false));
+		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-	@ExceptionHandler(ResourceNotFoundExcepcion.class)
-	public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest request) {
-
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(
+			Exception ex, WebRequest request) {
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),
+				ex.getMessage(),
 				request.getDescription(false));
+		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(RequiredObjectsIsNullException.class)
-	public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request) {
+	@ExceptionHandler(RequiredObjectIsNullException.class)
+	public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(
+			Exception ex, WebRequest request) {
 		
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),
+				ex.getMessage(),
 				request.getDescription(false));
+		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(InvalidJwtAuthenticationException.class)
-	public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(Exception ex, WebRequest request) {
+	public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationExceptions(
+			Exception ex, WebRequest request) {
 		
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),
 				ex.getMessage(),
 				request.getDescription(false));
+		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
 	}
+
 }

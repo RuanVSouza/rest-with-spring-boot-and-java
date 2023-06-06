@@ -10,8 +10,8 @@ import io.swagger.v3.oas.models.info.License;
 @Configuration
 public class OpenApiConfig {
 
-	@Bean
-	public OpenAPI customOpenAPI() {
+    @Bean
+    OpenAPI customOpenAPI() {
 		return new OpenAPI()
 			.info(new Info()
 					.title("RestFul API with Java 17 and Spring boot 3")

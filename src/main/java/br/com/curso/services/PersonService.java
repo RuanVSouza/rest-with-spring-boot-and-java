@@ -11,10 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.curso.controllers.PersonController;
 import br.com.curso.data.vo.v1.PersonVO;
-import br.com.curso.exceptions.RequiredObjectsIsNullException;
-import br.com.curso.exceptions.ResourceNotFoundExcepcion;
+import br.com.curso.exceptions.RequiredObjectIsNullException;
+import br.com.curso.exceptions.ResourceNotFoundException;
 import br.com.curso.mapper.DozerMapper;
-import br.com.curso.mapper.custom.PersonMapper;
 import br.com.curso.model.Person;
 import br.com.curso.repositories.PersonRepository;
 
@@ -24,9 +23,6 @@ public class PersonService {
 	@Autowired
 	PersonRepository repository;
 	
-	@Autowired
-	PersonMapper mapper;
-
 	private Logger logger = Logger.getLogger(PersonService.class.getName());
 
 	public List<PersonVO> findAll() {
@@ -40,14 +36,14 @@ public class PersonService {
 	public PersonVO findById(Long id){
 		logger.info("finding one PersonVO!");
 		
-		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundExcepcion("No records found for this ID"));
+		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 		var vo = DozerMapper.parseObject(entity, PersonVO.class);
 		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getId())).withSelfRel());
 		return vo;
 	}
 
 	public PersonVO create(PersonVO person) {
-		if(person == null) throw new RequiredObjectsIsNullException();
+		if(person == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Creating one person!");
 		
@@ -60,12 +56,12 @@ public class PersonService {
 	
 
 	public PersonVO update(PersonVO person){
-		if(person == null) throw new RequiredObjectsIsNullException();
+		if(person == null) throw new RequiredObjectIsNullException();
 		
 		logger.info("Update one person!");
 
 		var entity = repository.findById(person.getId())
-				.orElseThrow(() -> new ResourceNotFoundExcepcion("No records found for this ID"));
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
 		entity.setFirstName(person.getFirstName());
 		entity.setLastName(person.getLastName());
@@ -81,7 +77,7 @@ public class PersonService {
 		logger.info("delete one person!");
 
 		Person entity = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundExcepcion("No records found for this ID"));
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 		repository.delete(entity);
 	}
 

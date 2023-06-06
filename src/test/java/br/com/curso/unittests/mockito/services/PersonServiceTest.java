@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.curso.data.vo.v1.PersonVO;
-import br.com.curso.exceptions.RequiredObjectsIsNullException;
+import br.com.curso.exceptions.RequiredObjectIsNullException;
 import br.com.curso.model.Person;
 import br.com.curso.repositories.PersonRepository;
 import br.com.curso.services.PersonService;
@@ -139,7 +139,7 @@ class PersonServiceTest {
 	
 	@Test
 	void testUpdateWithNullPerson() {
-		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.update(null);
 		});
 		
@@ -177,7 +177,7 @@ class PersonServiceTest {
 	}
 	@Test
 	void testCreateWithNullPerson() {
-		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.create(null);
 		});
 		

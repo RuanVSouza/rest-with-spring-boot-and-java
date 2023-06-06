@@ -1,5 +1,5 @@
 cors:
-  originPatterns: http://localhost:3000,http://localhost:8080,http://ruan.com.br
+  originPatterns: http://localhost:3000,http://localhost:8080,https://ruan.com.br
 security:
   jwt:
     token:
@@ -7,19 +7,21 @@ security:
       expire-lenght: 3600000
 spring:
   datasource:
-   driver-class-name: com.mysql.cj.jdbc.Driver
-   url: jdbc:mysql://localhost:3306/rest-with-spring-boot-and-java?useTimeZone=true&serverTimeZone=UTC
-   username: root
-   password: G.yn7oau8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest-with-spring-boot-and-java?useTimeZone=true&serverTimeZone=UTC
+    username: root
+    password: G.yn7oau8
   jpa:
-   hibernate:
-    ddl-auto: update
-   properties:
     hibernate:
-      dialect: org.hibernate.dialect.MySQLDialect
-   show-sql: false
-spring-doc:
-  pathsToMatch: /api/**/v1/**
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: false
+springdoc:
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
   swagger-ui:
-   use-root-path: true
+    use-root-path: true
    

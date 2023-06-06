@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.curso.data.vo.v1.BookVO;
-import br.com.curso.exceptions.RequiredObjectsIsNullException;
+import br.com.curso.exceptions.RequiredObjectIsNullException;
 import br.com.curso.model.Book;
 import br.com.curso.repositories.BookRepository;
 import br.com.curso.services.BookService;
@@ -140,7 +140,7 @@ class BookServiceTest {
 	
 	@Test
 	void testUpdateWithNullBook() {
-		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.update(null);
 		});
 		
@@ -178,7 +178,7 @@ class BookServiceTest {
 	}
 	@Test
 	void testCreateWithNullBook() {
-		Exception exception = assertThrows(RequiredObjectsIsNullException.class, () -> {
+		Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
 			service.create(null);
 		});
 		

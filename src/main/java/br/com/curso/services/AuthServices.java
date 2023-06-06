@@ -33,11 +33,11 @@ public class AuthServices {
 			authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(username, password));
 			
-			var user = repository.findByUserName(username);
+			var user = repository.findByUsername(username);
 			
 			var tokenResponse = new TokenVO();
 			if (user != null) {
-				tokenResponse = tokenProvider.createAcessToken(username, user.getRoles());
+				tokenResponse = tokenProvider.createAccessToken(username, user.getRoles());
 			} else {
 				throw new UsernameNotFoundException("Username " + username + " not found!");
 			}
@@ -49,7 +49,7 @@ public class AuthServices {
 	
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity refreshToken(String username, String refreshToken) {
-		var user = repository.findByUserName(username);
+		var user = repository.findByUsername(username);
 		
 		var tokenResponse = new TokenVO();
 		if (user != null) {

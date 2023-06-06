@@ -6,40 +6,26 @@ import java.util.Date;
 public class ExceptionResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
-	private Date date;
+
+	private Date timestamp;
 	private String message;
 	private String details;
 	
-	public ExceptionResponse(Date date, String message, String details) {
-		this.date = date;
+	public ExceptionResponse(Date timestamp, String message, String details) {
+		this.timestamp = timestamp;
 		this.message = message;
 		this.details = details;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public String getDetails() {
 		return details;
 	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-	
-	
 }
