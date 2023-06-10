@@ -1,4 +1,4 @@
-package br.com.ruan.integrationtests.controller.withjson;
+package br.com.ruan.integrationtests.controller.cors.withjson;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertNotNull;
@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,22 +18,20 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.curso.Startup;
+import br.com.curso.data.vo.v1.security.TokenVO;
 import br.com.ruan.configs.TestConfigs;
 import br.com.ruan.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.ruan.integrationtests.vo.AccountCredentialsVO;
 import br.com.ruan.integrationtests.vo.PersonVO;
-import br.com.ruan.integrationtests.vo.TokenVO;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 
-
-@SpringBootTest(classes= Startup.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = Startup.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class PersonControllerJsonTest extends AbstractIntegrationTest {
-	
+public class PersonControllerCorsJsonTest extends AbstractIntegrationTest{
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
 
@@ -199,3 +197,4 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest {
 	}
 
 }
+

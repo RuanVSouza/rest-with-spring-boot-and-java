@@ -7,10 +7,11 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.curso.data.vo.v1.PersonVO;
+
 import br.com.curso.mapper.DozerMapper;
 import br.com.curso.model.Person;
 import br.com.curso.unittests.mapper.mocks.MockPerson;
+import br.com.ruan.integrationtests.vo.PersonVO;
 
 public class DozerConverterTest {
     
