@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import br.com.curso.Startup;
 import br.com.ruan.configs.TestConfigs;
 import br.com.ruan.integrationtests.controller.withyaml.mapper.YMLMapper;
+import br.com.ruan.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.ruan.integrationtests.vo.AccountCredentialsVO;
 import br.com.ruan.integrationtests.vo.TokenVO;
 import io.restassured.builder.RequestSpecBuilder;
@@ -29,7 +30,7 @@ import io.restassured.specification.RequestSpecification;
 
 @SpringBootTest(classes = Startup.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class AuthControllerYamlTest {
+public class AuthControllerYamlTest extends AbstractIntegrationTest{
 	 
 	private static YMLMapper objectMapper;
 	private static TokenVO tokenVO;

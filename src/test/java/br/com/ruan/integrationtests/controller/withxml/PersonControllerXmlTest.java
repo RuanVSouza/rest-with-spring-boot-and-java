@@ -1,4 +1,4 @@
-package br.com.ruan.integrationtests.controller.withjson;
+package br.com.ruan.integrationtests.controller.withxml;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import br.com.curso.Startup;
 import br.com.curso.data.vo.v1.security.TokenVO;
@@ -35,16 +35,16 @@ import io.restassured.specification.RequestSpecification;
 
 @SpringBootTest(classes= Startup.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)
-public class PersonControllerJsonTest extends AbstractIntegrationTest {
+public class PersonControllerXmlTest extends AbstractIntegrationTest {
 	
 	private static RequestSpecification specification;
-	private static ObjectMapper objectMapper;
+	private static XmlMapper objectMapper;
 
 	private static PersonVO person;
 	
 	@BeforeAll
 	public static void setup() {
-		objectMapper = new ObjectMapper();
+		objectMapper = new XmlMapper();
 		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		
 		person = new PersonVO();
@@ -58,7 +58,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		var accessToken = given()
 				.basePath("/auth/signin")
 					.port(TestConfigs.SERVER_PORT)
-					.contentType(TestConfigs.CONTENT_TYPE_JSON)
+					.contentType(TestConfigs.CONTENT_TYPE_XML)
+					.accept(TestConfigs.CONTENT_TYPE_XML)
 				.body(user)
 					.when()
 				.post()
@@ -84,7 +85,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		mockPerson();
 		
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 					.body(person)
 					.when()
 					.post()
@@ -119,7 +121,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		person.setLastName("Piquet Souto Maior");
 		
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 				.body(person)
 				.when()
 				.post()
@@ -154,7 +157,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		mockPerson();
 		
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 					.pathParam("id", person.getId())
 					.when()
 					.get("{id}")
@@ -188,7 +192,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	public void testDelete() throws JsonMappingException, JsonProcessingException {
 		
 			given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 					.pathParam("id", person.getId())
 					.when()
 					.delete("{id}")
@@ -201,7 +206,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	public void FindAll() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 					.when()
 					.get()
 				.then()
@@ -255,7 +261,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 				.build();
 			
 			given().spec(specificationWithoutToken)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_XML)
+				.accept(TestConfigs.CONTENT_TYPE_XML)
 					.when()
 					.get()
 				.then()
