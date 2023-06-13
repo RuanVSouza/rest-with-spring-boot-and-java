@@ -29,7 +29,7 @@ public class BookService {
 		
 		logger.info("Finding all book");
 		var books = DozerMapper.parseListObjects(repository.findAll(), BookVO.class);
-		books.stream().forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()));
+		books.stream().forEach(p -> p.add(linkTo(methodOn(BookController.class).findById(p.getId())).withSelfRel()));
 		return books;
 	}
 
@@ -38,7 +38,7 @@ public class BookService {
 		
 		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 		var vo = DozerMapper.parseObject(entity, BookVO.class);
-		vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
+		vo.add(linkTo(methodOn(BookController.class).findById(vo.getId())).withSelfRel());
 		return vo;
 	}
 
@@ -49,7 +49,7 @@ public class BookService {
 		
 		var entity =  DozerMapper.parseObject(book, Book.class);
 		var vo = DozerMapper.parseObject(repository.save(entity), BookVO.class);
-		vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
+		vo.add(linkTo(methodOn(BookController.class).findById(vo.getId())).withSelfRel());
 		return vo;
 	}
 	
@@ -59,7 +59,7 @@ public class BookService {
 		
 		logger.info("Update one book!");
 
-		var entity = repository.findById(book.getKey())
+		var entity = repository.findById(book.getId())
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
 		entity.setAuthor(book.getAuthor());
@@ -68,7 +68,7 @@ public class BookService {
 		entity.setTitle(book.getTitle());
 
 		var vo = DozerMapper.parseObject(repository.save(entity), BookVO.class);
-		vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
+		vo.add(linkTo(methodOn(BookController.class).findById(vo.getId())).withSelfRel());
 		return vo;
 	}
 

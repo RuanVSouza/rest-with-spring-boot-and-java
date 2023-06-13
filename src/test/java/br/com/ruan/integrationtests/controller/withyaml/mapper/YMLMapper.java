@@ -10,6 +10,7 @@ import io.restassured.mapper.ObjectMapper;
 import io.restassured.mapper.ObjectMapperDeserializationContext;
 import io.restassured.mapper.ObjectMapperSerializationContext;
 
+
 public class YMLMapper implements ObjectMapper{
 
 	private com.fasterxml.jackson.databind.ObjectMapper objectMapper;
@@ -47,6 +48,11 @@ public class YMLMapper implements ObjectMapper{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void disable(DeserializationFeature failOnUnknownProperties) {
+		
+		
 	}
 
 }

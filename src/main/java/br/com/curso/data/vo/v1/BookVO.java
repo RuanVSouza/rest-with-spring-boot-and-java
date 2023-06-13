@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
@@ -14,22 +13,30 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("id")
+	
 	@Mapping("id")
-	private Long key;
+	private Long id;
 	private String author;
 	private Date launchDate;
 	private Double price;
 	private String title;
 	
 	public BookVO() {}
-
-	public Long getKey() {
-		return key;
+	
+	public BookVO(Long id, String author, Date launchDate, Double price, String title) {
+		this.id = id;
+		this.author = author;
+		this.launchDate = launchDate;
+		this.price = price;
+		this.title = title;
 	}
 
-	public void setKey(Long key) {
-		this.key = key;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getAuthor() {
@@ -69,7 +76,7 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((launchDate == null) ? 0 : launchDate.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -90,10 +97,10 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 				return false;
 		} else if (!author.equals(other.author))
 			return false;
-		if (key == null) {
-			if (other.key != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!id.equals(other.id))
 			return false;
 		if (launchDate == null) {
 			if (other.launchDate != null)
@@ -112,4 +119,8 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 			return false;
 		return true;
 	}
+
+	
+
+	
 }
