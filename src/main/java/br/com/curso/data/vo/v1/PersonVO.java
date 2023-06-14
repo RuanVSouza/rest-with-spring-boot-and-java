@@ -21,22 +21,33 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 	private String lastName;
 	private String address;
 	private String gender;
+	private Boolean enabled;
 	
 	
 
-	public PersonVO(Long id, String firstName, String lastName, String address, String gender) {
+	public PersonVO(Long id, String firstName, String lastName, String address, String gender, Boolean enabled) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.gender = gender;
+		this.enabled = enabled;
 	}
 
 	public PersonVO() {
 	}
 
 	
+
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Long getId() {
 		return id;
@@ -83,6 +94,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -103,6 +115,11 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
+			return false;
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -126,4 +143,6 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 			return false;
 		return true;
 	}
+
+	
 }
