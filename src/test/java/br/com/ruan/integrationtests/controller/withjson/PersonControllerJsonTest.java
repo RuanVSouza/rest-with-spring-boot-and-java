@@ -1,6 +1,7 @@
 package br.com.ruan.integrationtests.controller.withjson;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -104,6 +105,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
+		assertTrue(persistedPerson.getEnabled());
 		
 		assertTrue(persistedPerson.getId() > 0);
 		
@@ -139,6 +141,45 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
+		assertTrue(persistedPerson.getEnabled());
+		
+		assertEquals(person.getId(), persistedPerson.getId());
+		
+		assertEquals("Nelson", persistedPerson.getFirstName());
+		assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+		assertEquals("Brasilia - DF", persistedPerson.getAddress());
+		assertEquals("Male", persistedPerson.getGender());
+	}
+	
+	
+	
+	@Test
+	@Order(3)
+	public void testDisableById() throws JsonMappingException, JsonProcessingException {
+		
+		var content = given().spec(specification)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.pathParam("id", person.getId())
+				.when()
+				.patch("{id}")
+				.then()
+				.statusCode(200)
+				.extract()
+				.body()
+				.asString();
+		
+		PersonVO persistedPerson = objectMapper.readValue(content, PersonVO.class);
+		person = persistedPerson;
+		
+		assertNotNull(persistedPerson);
+		
+		assertNotNull(persistedPerson.getId());
+		assertNotNull(persistedPerson.getFirstName());
+		assertNotNull(persistedPerson.getLastName());
+		assertNotNull(persistedPerson.getAddress());
+		assertNotNull(persistedPerson.getGender());
+		assertFalse(persistedPerson.getEnabled());
+		
 		
 		assertEquals(person.getId(), persistedPerson.getId());
 		
@@ -149,7 +190,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(3)
+	@Order(4)
 	public void testFindById() throws JsonMappingException, JsonProcessingException {
 		mockPerson();
 		
@@ -174,6 +215,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
+		assertFalse(persistedPerson.getEnabled());
 
 		assertEquals(person.getId(), persistedPerson.getId());
 		
@@ -184,7 +226,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(4)
+	@Order(5)
 	public void testDelete() throws JsonMappingException, JsonProcessingException {
 		
 			given().spec(specification)
@@ -197,7 +239,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(5)
+	@Order(6)
 	public void FindAll() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
@@ -244,7 +286,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -266,6 +308,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		person.setFirstName("Nelson");
 		person.setLastName("Piquet Souto Maior");
 		person.setAddress("Brasilia - DF");
+		person.setEnabled(true);
 		person.setGender("Male");
 	}
 
