@@ -1,6 +1,7 @@
 package br.com.ruan.integrationtests.controller.withyaml;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,7 +54,7 @@ public class PersonControllerYmlTest extends AbstractIntegrationTest {
 	@Test
 	@Order(0)
 	public void authorization() throws JsonMappingException, JsonProcessingException {
-AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
+		AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		
 		var accessToken = given()
 				.config(
@@ -66,6 +67,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 				.basePath("/auth/signin")
 					.port(TestConfigs.SERVER_PORT)
 					.contentType(TestConfigs.CONTENT_TYPE_YML)
+					.accept(TestConfigs.CONTENT_TYPE_YML)
 				.body(user, objectMapper)
 					.when()
 				.post()
@@ -99,6 +101,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 									TestConfigs.CONTENT_TYPE_YML,
 									ContentType.TEXT)))
 				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
 					.body(person, objectMapper)
 					.when()
 					.post()
@@ -118,6 +121,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
 		
+		assertTrue(persistedPerson.getEnabled());
 		assertTrue(persistedPerson.getId() > 0);
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -160,6 +164,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
 		
+		assertTrue(persistedPerson.getEnabled());
+		
 		assertEquals(person.getId(), persistedPerson.getId());
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -170,6 +176,50 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	
 	@Test
 	@Order(3)
+	public void testDisabledById() throws JsonMappingException, JsonProcessingException {
+		mockPerson();
+		
+		var persistedPerson = given().spec(specification)
+				.config(
+						RestAssuredConfig
+							.config()
+							.encoderConfig(EncoderConfig.encoderConfig()
+								.encodeContentTypeAs(
+									TestConfigs.CONTENT_TYPE_YML,
+									ContentType.TEXT)))
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
+					.pathParam("id", person.getId())
+					.when()
+					.patch("{id}")
+				.then()
+					.statusCode(200)
+						.extract()
+						.body()
+						.as(PersonVO.class, objectMapper);
+		
+		person = persistedPerson;
+		
+		assertNotNull(persistedPerson);
+		
+		assertNotNull(persistedPerson.getId());
+		assertNotNull(persistedPerson.getFirstName());
+		assertNotNull(persistedPerson.getLastName());
+		assertNotNull(persistedPerson.getAddress());
+		assertNotNull(persistedPerson.getGender());
+		
+		assertFalse(persistedPerson.getEnabled());
+
+		assertEquals(person.getId(), persistedPerson.getId());
+		
+		assertEquals("Nelson", persistedPerson.getFirstName());
+		assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+		assertEquals("Brasilia - DF", persistedPerson.getAddress());
+		assertEquals("Male", persistedPerson.getGender());
+	}
+	
+	@Test
+	@Order(4)
 	public void testFindById() throws JsonMappingException, JsonProcessingException {
 		mockPerson();
 		
@@ -181,7 +231,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 								.encodeContentTypeAs(
 									TestConfigs.CONTENT_TYPE_YML,
 									ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
 					.pathParam("id", person.getId())
 					.when()
 					.get("{id}")
@@ -201,6 +252,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
 
+		assertFalse(persistedPerson.getEnabled());
+		
 		assertEquals(person.getId(), persistedPerson.getId());
 		
 		assertEquals("Nelson", persistedPerson.getFirstName());
@@ -210,7 +263,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(4)
+	@Order(5)
 	public void testDelete() throws JsonMappingException, JsonProcessingException {
 		
 			given().spec(specification)
@@ -221,7 +274,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 							.encodeContentTypeAs(
 								TestConfigs.CONTENT_TYPE_YML,
 								ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
 					.pathParam("id", person.getId())
 					.when()
 					.delete("{id}")
@@ -230,11 +283,12 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(5)
+	@Order(6)
 	public void FindAll() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
 					.when()
 					.get()
 				.then()
@@ -253,6 +307,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(foundPersonOne.getAddress());
 		assertNotNull(foundPersonOne.getGender());
 		
+		assertTrue(foundPersonOne.getEnabled());
+		
 		assertEquals(1, foundPersonOne.getId());
 		
 		assertEquals("Ayrton", foundPersonOne.getFirstName());
@@ -268,6 +324,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(foundPersonSix.getAddress());
 		assertNotNull(foundPersonSix.getGender());
 		
+		assertTrue(foundPersonSix.getEnabled());
+		
 		assertEquals(9, foundPersonSix.getId());
 		
 		assertEquals("Nelson", foundPersonSix.getFirstName());
@@ -277,7 +335,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -295,7 +353,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 							.encodeContentTypeAs(
 								TestConfigs.CONTENT_TYPE_YML,
 								ContentType.TEXT)))
-				.contentType(TestConfigs.CONTENT_TYPE_JSON)
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
 					.when()
 					.get()
 				.then()
@@ -307,6 +366,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		person.setLastName("Piquet Souto Maior");
 		person.setAddress("Brasilia - DF");
 		person.setGender("Male");
+		person.setEnabled(true);
 	}
 
 }

@@ -105,7 +105,7 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(persistedPerson.getLastName());
 		assertNotNull(persistedPerson.getAddress());
 		assertNotNull(persistedPerson.getGender());
-		assertTrue(persistedPerson.getEnabled());
+		
 		
 		assertTrue(persistedPerson.getId() > 0);
 		
@@ -262,6 +262,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(foundPersonOne.getAddress());
 		assertNotNull(foundPersonOne.getGender());
 		
+		assertTrue(foundPersonOne.getEnabled());
+		
 		assertEquals(1, foundPersonOne.getId());
 		
 		assertEquals("Ayrton", foundPersonOne.getFirstName());
@@ -276,6 +278,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		assertNotNull(foundPersonSix.getLastName());
 		assertNotNull(foundPersonSix.getAddress());
 		assertNotNull(foundPersonSix.getGender());
+		
+		assertTrue(foundPersonSix.getEnabled());
 		
 		assertEquals(9, foundPersonSix.getId());
 		
@@ -308,8 +312,8 @@ AccountCredentialsVO user = new AccountCredentialsVO("leandro", "admin123");
 		person.setFirstName("Nelson");
 		person.setLastName("Piquet Souto Maior");
 		person.setAddress("Brasilia - DF");
-		person.setEnabled(true);
 		person.setGender("Male");
+		person.setEnabled(true);
 	}
 
 }
