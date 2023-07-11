@@ -21,11 +21,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import br.com.curso.Startup;
+import br.com.curso.data.vo.v1.security.TokenVO;
 import br.com.ruan.configs.TestConfigs;
 import br.com.ruan.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.ruan.integrationtests.vo.AccountCredentialsVO;
 import br.com.ruan.integrationtests.vo.BookVO;
-import br.com.ruan.integrationtests.vo.TokenVO;
 import br.com.ruan.integrationtests.vo.pagedmodels.PagedModelBook;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -69,8 +69,7 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 							.extract()
 							.body()
 								.as(TokenVO.class)
-								.getAccessToken()
-							;
+							.getAccessToken();
 		
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
@@ -225,7 +224,6 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 	    assertEquals(92.00, foundBookFive.getPrice());
 	}
 
-	
 	@Test
 	@Order(6)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
@@ -245,7 +243,6 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 			.then()
 				.statusCode(403);
 	}
-	/*
 	@Test
 	@Order(7)
 	public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
@@ -262,9 +259,9 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 						.body()
 							.asString();
 		
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/3</href></links>"));
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/5</href></links>"));
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/7</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/10</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/13</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/4</href></links>"));
 		
 		assertTrue(content.contains("<links><rel>first</rel><href>http://localhost:8888/api/book/v1?direction=asc&amp;page=0&amp;size=12&amp;sort=title,asc</href></links>"));
 		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1?page=0&amp;size=12&amp;direction=asc</href></links>"));
@@ -273,7 +270,6 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 		
 		assertTrue(content.contains("<page><size>12</size><totalElements>15</totalElements><totalPages>2</totalPages><number>0</number></page>"));
 	}
-	*/
 	
     private void mockBook() {
         book.setTitle("Docker Deep Dive");
