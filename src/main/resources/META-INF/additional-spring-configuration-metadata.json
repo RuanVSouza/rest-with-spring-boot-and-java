@@ -263,5 +263,10 @@
     "name": "cors.origin-patterns",
     "type": "java.lang.String",
     "description": "A description for 'cors.origin-patterns'"
+  },
+  {
+    "name": "file.upload-dir",
+    "type": "java.lang.String",
+    "description": "A description for 'file.upload-dir'"
   }
 ]}
