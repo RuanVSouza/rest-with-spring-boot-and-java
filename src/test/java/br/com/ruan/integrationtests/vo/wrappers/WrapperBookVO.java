@@ -7,21 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class WrapperPersonVO implements Serializable {
+public class WrapperBookVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("_embedded")
-	private PersonEmbeddedVO embedded;
+	private BookEmbeddedVO embedded;
 	
-	public WrapperPersonVO() {
+	public WrapperBookVO() {
 	}
 	
-	public PersonEmbeddedVO getEmbedded() {
+	public BookEmbeddedVO getEmbedded() {
 		return embedded;
 	}
 
-	public void setEmbedded(PersonEmbeddedVO embedded) {
+	public void setEmbedded(BookEmbeddedVO embedded) {
 		this.embedded = embedded;
 	}
 

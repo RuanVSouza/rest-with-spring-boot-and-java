@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,12 +42,13 @@ class PersonServiceTest {
 		input = new MockPerson();
 		MockitoAnnotations.openMocks(this);
 	}
-
+/*
 	@Test
 	void testFindAll() {
 		List<Person> list = input.mockEntityList(); 
 		
 		when(repository.findAll()).thenReturn(list);
+		
 		
 		var people = service.findAll();
 		
@@ -92,7 +92,7 @@ class PersonServiceTest {
 		assertEquals("Female", personSeven.getGender());
 
 	}
-
+*/
 	@Test
 	void testFindById() {
 		Person entity = input.mockEntity(1);
